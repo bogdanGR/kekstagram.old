@@ -15,21 +15,33 @@
   var decreaseBtn = upload.querySelector('.upload-resize-controls-button-dec');
   var increaseBtn = upload.querySelector('.upload-resize-controls-button-inc');
   var resizeControlValue = upload.querySelector('.upload-resize-controls-value');
+  var controlFilters = upload .querySelector('.upload-filter-controls');
+  var ENTER_KEY_CODE = 13;
+  var isActivateEvent = function (evt) {
+    return evt.keyCode && evt.keyCode === ENTER_KEY_CODE;
+  };
 
-  var onShowImgLoaderClick = function () {
-  // скрываем форму кадрирования
+  var showImgLoader = function () {
+    // скрываем форму кадрирования
     uploadOverlay.classList.add('invisible');
 
-  //  показываем форму загрузки изображения
+    // показываем форму загрузки изображения
     uploadSelect.classList.remove('invisible');
   };
 
-  var onShowCroppFormClick = function () {
+  var onShowImgLoaderClick = function () {
+    showImgLoader();
+  };
+
+  var showCroppForm = function () {
     // показываем форму кадрирования
     uploadOverlay.classList.remove('invisible');
 
     // скрываем форму загрузки изображения
     uploadSelect.classList.add('invisible');
+  };
+  var onShowCroppFormClick = function () {
+    showCroppForm();
   };
 
   var addFilterToImg = function (activeClass) {
@@ -72,15 +84,28 @@
     decreaseZoom();
   };
 
-  for (var i = 1; i < uploadFilter.length; i++) {
-    uploadFilter[i].addEventListener('click', function (e) {
-      addFilterToImg(e.target);
-    });
-  }
+  var activateFilter = function (evt) {
+    var currentElement = evt.target.classList.contains('upload-filter');
+    if (currentElement !== null) {
+      addFilterToImg(evt.target);
+    }
+  };
+
+  var onActivateFilterClick = function (evt) {
+    activateFilter(evt);
+  };
+
+  var onActivateFilterKeydown = function (evt) {
+    if (isActivateEvent(evt)) {
+      activateFilter(evt);
+    }
+  };
 
   decreaseBtn.addEventListener('click', onDecreaseZoomBtnClick);
   increaseBtn.addEventListener('click', onIncreaseZoomBtnClick);
   uploadCancel.addEventListener('click', onShowImgLoaderClick);
+  controlFilters.addEventListener('click', onActivateFilterClick);
+  controlFilters.addEventListener('change', onActivateFilterKeydown);
   uploadFile.addEventListener('change', onShowCroppFormClick);
   onShowImgLoaderClick();
 })();
