@@ -15,8 +15,9 @@
   var decreaseBtn = upload.querySelector('.upload-resize-controls-button-dec');
   var increaseBtn = upload.querySelector('.upload-resize-controls-button-inc');
   var resizeControlValue = upload.querySelector('.upload-resize-controls-value');
-  var controlFilters = upload .querySelector('.upload-filter-controls');
+  var controlFilters = upload.querySelector('.upload-filter-controls');
   var ENTER_KEY_CODE = 13;
+
   var isActivateEvent = function (evt) {
     return evt.keyCode && evt.keyCode === ENTER_KEY_CODE;
   };
@@ -42,11 +43,6 @@
   };
   var onShowCroppFormClick = function () {
     showCroppForm();
-  };
-
-  var addFilterToImg = function (activeClass) {
-    var currentFilter = 'filter-' + activeClass.value;
-    imgFilterPreview.setAttribute('class', currentFilter);
   };
 
   var getCurrentValue = function () {
@@ -84,10 +80,16 @@
     decreaseZoom();
   };
 
+  var addFilterToImg = function (activeClass) {
+    var currentFilter = 'filter-' + activeClass.value;
+    imgFilterPreview.setAttribute('class', currentFilter);
+  };
+
   var activateFilter = function (evt) {
     var currentElement = evt.target.classList.contains('upload-filter');
     if (currentElement !== null) {
       addFilterToImg(evt.target);
+      console.log(evt.target);
     }
   };
 
@@ -105,7 +107,7 @@
   increaseBtn.addEventListener('click', onIncreaseZoomBtnClick);
   uploadCancel.addEventListener('click', onShowImgLoaderClick);
   controlFilters.addEventListener('click', onActivateFilterClick);
-  controlFilters.addEventListener('change', onActivateFilterKeydown);
+  controlFilters.addEventListener('keydown', onActivateFilterKeydown);
   uploadFile.addEventListener('change', onShowCroppFormClick);
   onShowImgLoaderClick();
 })();
