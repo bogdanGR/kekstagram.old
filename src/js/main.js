@@ -1,6 +1,5 @@
 'use strict';
 (function () {
-
   var upload = document.querySelector('.upload');
 
 // форма кадрирования
@@ -10,7 +9,7 @@
   var uploadSelect = upload.querySelector('#upload-select-image');
   var uploadCancel = upload.querySelector('.upload-form-cancel');
   var uploadFile = upload.querySelector('#upload-file');
-  var uploadFilter = upload.querySelectorAll('.upload-filter');
+  // var uploadFilter = upload.querySelectorAll('.upload-filter');
   var imgFilterPreview = upload.querySelector('.filter-image-preview');
   var decreaseBtn = upload.querySelector('.upload-resize-controls-button-dec');
   var increaseBtn = upload.querySelector('.upload-resize-controls-button-inc');
@@ -23,6 +22,8 @@
   };
 
   var showImgLoader = function () {
+    uploadFile.value = '';
+
     // скрываем форму кадрирования
     uploadOverlay.classList.add('invisible');
 
@@ -35,12 +36,13 @@
   };
 
   var showCroppForm = function () {
-    // показываем форму кадрирования
+      // показываем форму кадрирования
     uploadOverlay.classList.remove('invisible');
 
-    // скрываем форму загрузки изображения
+      // скрываем форму загрузки изображения
     uploadSelect.classList.add('invisible');
   };
+
   var onShowCroppFormClick = function () {
     showCroppForm();
   };
@@ -80,34 +82,34 @@
     decreaseZoom();
   };
 
-  var addFilterToImg = function (activeClass) {
-    var currentFilter = 'filter-' + activeClass.value;
+  var applyFilter = function (currentNameFilter) {
+    var currentFilter = 'filter-' + currentNameFilter.value;
     imgFilterPreview.setAttribute('class', currentFilter);
   };
 
-  var activateFilter = function (evt) {
-    var currentElement = evt.target.classList.contains('upload-filter');
-    if (currentElement !== null) {
-      addFilterToImg(evt.target);
-      console.log(evt.target);
+  var activeFilter = function (evt) {
+    var currentElement = evt.target.classList.contains('upload-filter') ? evt.target : evt.target.parentNode.previousElementSibling;
+    if (currentElement) {
+      applyFilter(currentElement);
     }
   };
 
-  var onActivateFilterClick = function (evt) {
-    activateFilter(evt);
+  var onFilterClick = function (evt) {
+    activeFilter(evt);
   };
 
-  var onActivateFilterKeydown = function (evt) {
+  var onFilterKeydown = function (evt) {
     if (isActivateEvent(evt)) {
-      activateFilter(evt);
+      activeFilter(evt);
     }
   };
 
   decreaseBtn.addEventListener('click', onDecreaseZoomBtnClick);
   increaseBtn.addEventListener('click', onIncreaseZoomBtnClick);
   uploadCancel.addEventListener('click', onShowImgLoaderClick);
-  controlFilters.addEventListener('click', onActivateFilterClick);
-  controlFilters.addEventListener('keydown', onActivateFilterKeydown);
+  controlFilters.addEventListener('click', onFilterClick);
+  controlFilters.addEventListener('keypress', onFilterKeydown);
   uploadFile.addEventListener('change', onShowCroppFormClick);
-  onShowImgLoaderClick();
+  showImgLoader();
+
 })();
