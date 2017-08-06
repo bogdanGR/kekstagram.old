@@ -2,14 +2,13 @@
 (function () {
   var upload = document.querySelector('.upload');
 
-// форма кадрирования
+  // форма кадрирования
   var uploadOverlay = upload.querySelector('.upload-overlay');
 
-// форма загрузки изображения
+  // форма загрузки изображения
   var uploadSelect = upload.querySelector('#upload-select-image');
   var uploadCancel = upload.querySelector('.upload-form-cancel');
   var uploadFile = upload.querySelector('#upload-file');
-  // var uploadFilter = upload.querySelectorAll('.upload-filter');
   var imgFilterPreview = upload.querySelector('.filter-image-preview');
   var decreaseBtn = upload.querySelector('.upload-resize-controls-button-dec');
   var increaseBtn = upload.querySelector('.upload-resize-controls-button-inc');
@@ -36,10 +35,10 @@
   };
 
   var showCroppForm = function () {
-      // показываем форму кадрирования
+    // показываем форму кадрирования
     uploadOverlay.classList.remove('invisible');
 
-      // скрываем форму загрузки изображения
+    // скрываем форму загрузки изображения
     uploadSelect.classList.add('invisible');
   };
 
@@ -53,8 +52,8 @@
 
   var zoomImg = function (zoomValue) {
     var transformCoeff = zoomValue / 100;
-    imgFilterPreview.style.transform = 'scale(' + transformCoeff + ')';
     var inputValue = zoomValue + '%';
+    imgFilterPreview.style.transform = 'scale(' + transformCoeff + ')';
     resizeControlValue.setAttribute('value', inputValue);
   };
 
@@ -82,8 +81,8 @@
     decreaseZoom();
   };
 
-  var applyFilter = function (currentNameFilter) {
-    var currentFilter = 'filter-' + currentNameFilter.value;
+  var applyFilter = function (currentFilterName) {
+    var currentFilter = 'filter-' + currentFilterName.value;
     imgFilterPreview.setAttribute('class', currentFilter);
   };
 
