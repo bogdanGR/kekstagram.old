@@ -9,13 +9,10 @@
   var uploadSelect = upload.querySelector('#upload-select-image');
   var uploadCancel = upload.querySelector('.upload-form-cancel');
   var uploadFile = upload.querySelector('#upload-file');
-  var decreaseBtn = document.querySelector('.upload-resize-controls-button-dec');
-  var increaseBtn = document.querySelector('.upload-resize-controls-button-inc');
-  var resizeControlValue = document.querySelector('.upload-resize-controls-value');
+  var resizeControlValue = upload.querySelector('.upload-resize-controls-value');
+  var recizeControlFieldset = upload.querySelector('.upload-resize-controls');
+  var STEP_OF_ZOOM = 25;
 
-  var getCurrentValue = function () {
-    return parseInt(resizeControlValue.value, 10);
-  };
 
   var showImgLoader = function () {
     uploadFile.value = '';
@@ -43,9 +40,9 @@
     showCroppForm();
   };
 
-  window.initializeScale(decreaseBtn, 25, getCurrentValue());
-  window.initializeScale(increaseBtn, 25, getCurrentValue());
-  window.initializeFilters();
+  window.controlScales(recizeControlFieldset, STEP_OF_ZOOM, resizeControlValue.value);
+  window.filters();
+
 
   uploadCancel.addEventListener('click', onShowImgLoaderClick);
   uploadFile.addEventListener('change', onShowCroppFormClick);
