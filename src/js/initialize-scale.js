@@ -2,23 +2,26 @@
 
 window.controlScales = (function () {
   var imgFilterPreview = document.querySelector('.filter-image-preview');
-  var resizeControlValue = document.querySelector('.upload-resize-controls-value');
-
-
-  var zoomImg = function (zoomValue) {
-    var transformCoeff = zoomValue / 100;
-    var inputValue = zoomValue + '%';
-    imgFilterPreview.style.transform = 'scale(' + transformCoeff + ')';
-    resizeControlValue.setAttribute('value', inputValue);
-  };
 
   var initializeScale = function (element, step, defaultValue) {
-    var getCurrentValue = function () {
-      return parseInt(defaultValue, 10);
+
+    // добавляем zoom изображению
+    var zoomImg = function (zoomValue) {
+      var transformCoeff = zoomValue / 100;
+      var inputValue = zoomValue + '%';
+      imgFilterPreview.style.transform = 'scale(' + transformCoeff + ')';
+      defaultValue.setAttribute('value', inputValue);
     };
+
+    // получает текущие значения
+    var getCurrentValue = function () {
+      return parseInt(defaultValue.value, 10);
+    };
+
     var decreaseBtn = element.querySelector('.upload-resize-controls-button-dec');
     var increaseBtn = element.querySelector('.upload-resize-controls-button-inc');
 
+    // уменьшаем zoom
     var decreaseZoom = function () {
       var inputValue = getCurrentValue();
       if (inputValue <= 100 && inputValue > step) {
@@ -27,6 +30,7 @@ window.controlScales = (function () {
       }
     };
 
+    // увеличиваем zoom
     var increaseZoom = function () {
       var inputValue = getCurrentValue();
       if (inputValue < 100 && inputValue >= step) {
@@ -35,10 +39,12 @@ window.controlScales = (function () {
       }
     };
 
+    // вызываем обработчик события по нажатию мышки
     var onIncreaseZoomBtnClick = function () {
       increaseZoom();
     };
 
+    // вызываем обработчик события по нажатию мышки
     var onDecreaseZoomBtnClick = function () {
       decreaseZoom();
     };

@@ -40,9 +40,8 @@
     showCroppForm();
   };
 
-  window.controlScales(recizeControlFieldset, STEP_OF_ZOOM, resizeControlValue.value);
+  window.controlScales(recizeControlFieldset, STEP_OF_ZOOM, resizeControlValue);
   window.filters();
-
 
   uploadCancel.addEventListener('click', onShowImgLoaderClick);
   uploadFile.addEventListener('change', onShowCroppFormClick);
